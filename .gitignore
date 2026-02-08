@@ -1,0 +1,13 @@
+# Django / Python
+*.log
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+.env
+.env.*
+
+# PyCharm
+.idea/
+*.iml
+
