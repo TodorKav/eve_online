@@ -2,8 +2,7 @@ from django.db import models
 
 
 class CreatedAtMixin(models.Model):
-    created_at = models.DateField(auto_now=True)
-
+    created_at = models.DateField(auto_now=True, blank=True, null=True)
     class Meta:
         abstract = True
 

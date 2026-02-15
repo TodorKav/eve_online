@@ -11,12 +11,14 @@ from eve.industry.models import Categories
 
 url_categories = 'https://esi.evetech.net/universe/categories/'
 
-category_list = requests.get(url_categories, timeout=10).json()
+TIMEOUT = (15, 30)
+
+category_list = requests.get(url_categories, timeout=TIMEOUT).json()
 
 with transaction.atomic():
     object_list = []
     for category in tqdm(category_list):
-        obj_json = requests.get(f'{url_categories}{category}/').json()
+        obj_json = requests.get(f'{url_categories}{category}/', timeout=TIMEOUT).json()
         object_list.append(Categories(
                                     category_id=obj_json.get('category_id'),
                                     name=obj_json.get('name'),
