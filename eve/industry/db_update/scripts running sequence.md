@@ -4,7 +4,18 @@
 1. categories.py
 2. groups.py
 3. market_groups.py
-
+4. types.py
+5. 
 
 ---
-recommended updates to do: table
+### Recommended updates for each model:
+
+|    Model    |     Period        |
+|-------------|-------------------|
+|Categories   |every 3–6 months   |
+|Groups       |every 3–6 months   |
+|MarketGroups |mounthly           |
+|Types        |weekly             |
+|pojwepofjewp |ewfewfewf    sfew  |
+
+#### Run all after expansions/patches.
