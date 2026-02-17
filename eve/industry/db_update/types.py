@@ -13,7 +13,11 @@ url_categories = 'https://esi.evetech.net/universe/types/'
 
 TIMEOUT = (15, 30)
 
-group_list = requests.get(url_categories, timeout=TIMEOUT).json()
+session = requests.Session()
+pages = int(session.get(url_categories, timeout=TIMEOUT).headers.get("X-Pages", 1))
+type_list = []
+for page in tqdm(range(1, pages + 1)):
+    type_list += (session.get(f'{url_categories}?page={page}', timeout=TIMEOUT).json())
 
 # due to inconsistency in the ESI (Eve API) there are Types-class objects with invalid groups__id's or market__id's.
 # The goal here is to add None as a foreign key, if the provided groups_id or market_id is not a valid foreign key.
@@ -23,8 +27,8 @@ valid_market_group_ids = set(MarketGroups.objects.values_list('market_group_id',
 
 with transaction.atomic():
     object_list = []
-    for group_id in tqdm(group_list):
-        obj_json = requests.get(f'{url_categories}{group_id}/', timeout=TIMEOUT).json()
+    for type_id in tqdm(type_list):
+        obj_json = session.get(f'{url_categories}{type_id}/', timeout=TIMEOUT).json()
 
         gid = obj_json.get('group_id')
         mgid = obj_json.get('market_group_id')
@@ -50,6 +54,6 @@ with transaction.atomic():
                                      update_fields=['group_id', 'market_group_id', 'name',
                                                     'description', 'capacity', 'mass', 'volume',
                                                     'packaged_volume', 'radius', 'portion_size',
-                                                    'graphic_id', 'icon_id', 'published'],
+                                                    'graphic_id', 'icon_id', 'published', 'created_at'],
                                      unique_fields=['type_id',],
                                      batch_size=1000)

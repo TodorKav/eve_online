@@ -23,8 +23,8 @@ class MarketGroups(CreatedAtMixin):
 
 class Types(CreatedAtDateTimeMixin, PublishedMixin):
     type_id = models.IntegerField(primary_key=True)
-    group_id = models.ForeignKey(to=Groups, on_delete=models.CASCADE, related_name='types', null=True, blank=True)
-    market_group_id = models.ForeignKey(to=MarketGroups, on_delete=models.CASCADE, related_name='types', null=True, blank=True)
+    group_id = models.ForeignKey(to=Groups, on_delete=models.CASCADE, related_name='types', null=True, blank=True, db_column='group_id')
+    market_group_id = models.ForeignKey(to=MarketGroups, on_delete=models.CASCADE, related_name='types', null=True, blank=True, db_column='market_group_id')
     name = models.CharField(max_length=200)
     description = models.TextField()
     capacity = models.FloatField(blank=True, null=True)
@@ -36,3 +36,8 @@ class Types(CreatedAtDateTimeMixin, PublishedMixin):
     graphic_id = models.IntegerField(blank=True, null=True) # tells the game engine or API which 3D model file to load to render that item in space
     icon_id = models.IntegerField(blank=True, null=True) # https://images.evetech.net/types/587/icon
 
+
+class MarketPrices(CreatedAtDateTimeMixin):
+    type_id = models.OneToOneField(to=Types, on_delete=models.CASCADE, primary_key=True, db_column='type_id', related_name='market_prices')
+    adjusted_price = models.FloatField(blank=True, null=True)
+    average_price = models.FloatField(blank=True, null=True)
