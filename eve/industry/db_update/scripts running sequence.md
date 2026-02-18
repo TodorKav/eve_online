@@ -6,16 +6,18 @@
 3. market_groups.py
 4. types.py
 5. market_prices.py
+6. corporations_with_lp_stores.py
 
 ---
 ### Recommended updates for each model:
 
-| Model         | Period           |
-|---------------|------------------|
-| Categories    | every 3–6 months |
-| Groups        | every 3–6 months |
-| MarketGroups  | mounthly         |
-| Types         | mounthly         |
-| Market prices | hourly           |
+| Model                    | Period            |
+|--------------------------|-------------------|
+| Categories               | every 3–6 months  |
+| Groups                   | every 3–6 months  |
+| CorporationsWithLPStores | every 3–6 months  |
+| MarketGroups             | mounthly          |
+| Types                    | mounthly          |
+| Market prices            | hourly            |
 
 #### Run all after expansions/patches.

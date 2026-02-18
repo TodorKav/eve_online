@@ -41,3 +41,11 @@ class MarketPrices(CreatedAtDateTimeMixin):
     type_id = models.OneToOneField(to=Types, on_delete=models.CASCADE, primary_key=True, db_column='type_id', related_name='market_prices')
     adjusted_price = models.FloatField(blank=True, null=True)
     average_price = models.FloatField(blank=True, null=True)
+
+class CorporationsWithLPStores(CreatedAtMixin):
+    corporation_id = models.IntegerField(primary_key=True)
+    description = models.TextField()
+    home_station_id = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=200)
+    ticker = models.CharField(max_length=20)
+    war_eligible = models.BooleanField(default=False)
