@@ -40,7 +40,7 @@ with transaction.atomic():
     CorporationsWithLPStores.objects.bulk_create(object_list,
                                                  update_conflicts=True,
                                                  update_fields=['description', 'home_station_id',
-                                                                'name', 'ticker', 'war_eligible'],
+                                                                'name', 'ticker', 'war_eligible', 'created_at'],
                                                  unique_fields=['corporation_id',],
                                                  batch_size=1000)
 

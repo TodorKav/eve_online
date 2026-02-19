@@ -42,6 +42,7 @@ class MarketPrices(CreatedAtDateTimeMixin):
     adjusted_price = models.FloatField(blank=True, null=True)
     average_price = models.FloatField(blank=True, null=True)
 
+
 class CorporationsWithLPStores(CreatedAtMixin):
     corporation_id = models.IntegerField(primary_key=True)
     description = models.TextField()
@@ -49,3 +50,18 @@ class CorporationsWithLPStores(CreatedAtMixin):
     name = models.CharField(max_length=200)
     ticker = models.CharField(max_length=20)
     war_eligible = models.BooleanField(default=False)
+    type_id = models.ManyToManyField(to=Types, through='CorporationsLpItemTypes',)
+
+
+class CorporationsLpItemTypes(CreatedAtMixin):
+    type_id = models.ForeignKey(to='Types', on_delete=models.CASCADE, db_column='type_id', related_name='lp_store_offers')
+    corporation_id = models.ForeignKey(to='CorporationsWithLPStores', on_delete=models.CASCADE, db_column='corporation_id', related_name='lp_store_offers')
+    ak_cost = models.IntegerField(blank=True, null=True)
+    isk_cost = models.IntegerField(blank=True, null=True)
+    lp_cost = models.IntegerField(blank=True, null=True)
+    offer_id = models.IntegerField(blank=True, null=True)
+    quantity = models.IntegerField(blank=True, null=True)
+    required_items = models.JSONField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ('type_id', 'corporation_id')
