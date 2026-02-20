@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 — Page Not Found</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080c10;
+      --surface: #0e1318;
+      --border: #1e2d3d;
+      --accent: #00e5ff;
+      --accent-dim: rgba(0, 229, 255, 0.12);
+      --accent-glow: rgba(0, 229, 255, 0.35);
+      --text: #c8d8e8;
+      --muted: #4a6278;
+      --error: #ff4060;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.4;
+      animation: gridDrift 20s linear infinite;
+    }
+
+    @keyframes gridDrift {
+      from { background-position: 0 0; }
+      to { background-position: 48px 48px; }
+    }
+
+    /* Glowing orb */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      max-width: 680px;
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--error);
+      border: 1px solid var(--error);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      animation: blink 2s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .error-code {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(7rem, 20vw, 11rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+      text-shadow:
+        0 0 40px var(--accent-glow),
+        0 0 80px rgba(0,229,255,0.15);
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .error-code::after {
+      content: '404';
+      position: absolute;
+      inset: 0;
+      color: var(--accent-dim);
+      -webkit-text-stroke: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(0,229,255,0.08) 60%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transform: translate(4px, 4px);
+      z-index: -1;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 800;
+      color: #e0eeff;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
+    }
+
+    /* Terminal-style path display */
+    .path-display {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .path-display .prompt { color: var(--accent); }
+    .path-display .path-text { color: var(--error); }
+    .path-display .cursor {
+      display: inline-block;
+      width: 7px;
+      height: 14px;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      border-radius: 1px;
+    }
+
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.75rem 1.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s;
+    }
+
+    .home-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: -1;
+    }
+
+    .home-btn:hover { color: var(--bg); }
+    .home-btn:hover::before { transform: translateX(0); }
+
+    .home-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* Scan line effect */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Corner decorations */
+    .corner {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      opacity: 0.4;
+    }
+    .corner.tl { top: 24px; left: 24px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+    .corner.tr { top: 24px; right: 24px; border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+    .corner.bl { bottom: 24px; left: 24px; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+    .corner.br { bottom: 24px; right: 24px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+
+    /* Status bar */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 1.5rem;
+      z-index: 20;
+    }
+
+    .status-item {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--error);
+      animation: blink 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scanlines"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="container">
+    <div class="badge">⚠ Error</div>
+
+    <div class="error-code">404</div>
+
+    <h1>Page Not Found</h1>
+
+    <p class="description">
+      The resource you requested could not be located on this server.
+      It may have been moved, deleted, or never existed.
+    </p>
+
+    <div class="path-display">
+      <span class="prompt">$</span>
+      <span>GET</span>
+      <span class="path-text">{{ request.path }}</span>
+      <span class="cursor"></span>
+    </div>
+
+    <br>
+
+    <a href="/" class="home-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Return Home
+    </a>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-item">
+      <div class="status-dot"></div>
+      HTTP 404
+    </div>
+    <div class="status-item">Not Found</div>
+    <div class="status-item" style="margin-left: auto;">EVE LP</div>
+  </div>
+
+</body>
+</html>

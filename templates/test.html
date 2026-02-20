@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>Hello World</p>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+    {% for i in object_list %}
+        <tr>
+            <td>{{ i.type_id_id }}</td>
+            <td>{{ i.type_id.name }}</td>
+            <td>{{ i.corporation_id.name }}</td>
+            <td>{{ i.lp_cost }}</td>
+            <td>{{ i.isk_cost }}</td>
+            <td>{{ i.required }}</td>
+            <td>{{ i.material_cost }}</td>
+            <td>{{ i.quantity }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>

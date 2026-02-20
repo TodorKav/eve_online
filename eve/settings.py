@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
 from pathlib import Path
+from typing import Any
+
 from dotenv import load_dotenv
 
 
@@ -27,15 +29,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG', 'False') in ('True', '1', 't')
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = [ ]
 
 
 # Application definition
 
 PROJECT_APPS = [
     'eve.industry',
+    'eve.profiles',
 ]
 
 INSTALLED_APPS = [

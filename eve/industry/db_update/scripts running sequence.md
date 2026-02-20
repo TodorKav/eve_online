@@ -11,13 +11,14 @@
 ---
 ### Recommended updates for each model:
 
-| Model                    | Period            |
-|--------------------------|-------------------|
-| Categories               | every 3–6 months  |
-| Groups                   | every 3–6 months  |
-| CorporationsWithLPStores | every 3–6 months  |
-| MarketGroups             | mounthly          |
-| Types                    | mounthly          |
-| Market prices            | hourly            |
+| Model                       | Period            |
+|-----------------------------|-------------------|
+| Categories                  | every 3–6 months  |
+| Groups                      | every 3–6 months  |
+| Corporations_with_lp_stores | every 3–6 months  |
+| Corporations_lp_item_types  | every 3–6 months  |
+| MarketGroups                | mounthly          |
+| Types                       | mounthly          |
+| Market prices               | hourly            |
 
 #### Run all after expansions/patches.
