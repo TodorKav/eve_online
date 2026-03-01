@@ -17,6 +17,6 @@ def price_pro_lp(value):
     lp = getattr(value, 'lp_cost', 1)
     if lp == 0:
         lp = 1
-    result = (isk_income - blueprint_cost - other_costs)/lp
+    result = (isk_income * value.quantity - blueprint_cost  - other_costs)/lp
 
     return result

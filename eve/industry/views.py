@@ -10,7 +10,7 @@ from eve.industry.models import CorporationsLpItemTypes
 class ItemList(ListView):
     template_name = 'industry/items_list.html'
     model = CorporationsLpItemTypes
-    paginate_by = 100000
+    paginate_by = 100
 
     def get_queryset(self):
         queryset = super().get_queryset()

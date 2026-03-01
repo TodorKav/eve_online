@@ -6,7 +6,6 @@
     <title>Title</title>
 </head>
 <body>
-    <p>Hello World</p>
     <table>
         <tr>
             <th>Type ID</th>
@@ -29,7 +28,7 @@
             <td>{{ i.lp_cost }}</td>
             <td>{{ i.isk_cost }}</td>
             <td>{{ i.required }}</td>
-            <td>{{ i.material_cost }}</td>
+            <td>{{ i.material_cost|floatformat:2 }}</td>
             <td>{{ i.quantity }}</td>
             <td>{{ i.type_id.market_prices.adjusted_price|floatformat:2 }}</td>
             <td>{{ i|price_pro_lp|floatformat:2 }}</td>

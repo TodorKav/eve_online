@@ -46,7 +46,7 @@ with transaction.atomic():
             ))
     CorporationsLpItemTypes.objects.bulk_create(lp_store_items.values(),
                                update_conflicts=True,
-                               update_fields=['ak_cost', 'isk_cost', 'lp_cost', 'offer_id', 'quantity', 'required_items'],
+                               update_fields=['ak_cost', 'isk_cost', 'lp_cost', 'offer_id', 'quantity', 'required_items', 'created_at'],
                                unique_fields=['type_id', 'corporation_id'],
                                batch_size=1000)
 
