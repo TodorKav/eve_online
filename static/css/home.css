@@ -658,3 +658,25 @@ footer {
   border-radius: 3px;
   /*background: var(--accent-dim);*/
 }
+
+/* Read-only profile field row */
+.eve-field {
+  font-size: 0.85rem;
+  color: var(--text);
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--bg);
+}
+
+/* Button row — equal width side by side */
+.eve-btn-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.eve-btn-row .eve-btn,
+.eve-btn-row .eve-btn-ghost {
+  flex: 1;
+  justify-content: center;
+}

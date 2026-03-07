@@ -19,6 +19,14 @@
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                        <div class="eve-alert error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
                     <label for="{{ form.password1.id_for_label }}">Password</label>
                     {{ form.password1 }}
                     {% for error in form.password1.errors %}

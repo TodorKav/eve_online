@@ -15,7 +15,11 @@
           <li><a href="{% url 'industry:itemlist' %}">LP Store</a></li>
           <li><a href="#">Preferences</a></li>
           {% if user.is_authenticated %}
-              <li><span class="nav-user"><i class="fas fa-user"></i> {{ user.username }}</span></li>
+              <li>
+                  <span class="nav-user"><i class="fas fa-user"></i>
+                  <a href="{% url 'accounts:profile_detail' user.pk %}">{{ user.username }}</a>
+                </span>
+              </li>
               <li>
                   <form action="{% url 'accounts:logout' %}" method="post">
                       {% csrf_token %}

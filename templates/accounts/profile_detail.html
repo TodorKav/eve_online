@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="max-width: 520px; margin: 4rem auto;">
+
+        <div class="eve-card">
+            <h5>// Profile</h5>
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label>Username</label>
+                    <span class="eve-field">
+                    <i class="fas fa-user" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                    {{ user.username }}
+                </span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label>Email</label>
+                    <span class="eve-field">
+                    <i class="fas fa-envelope" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                        {% if user.email %}
+                            {{ user.email }}
+                        {% else %}
+                            <span style="color: var(--muted);">No email set</span>
+                        {% endif %}
+                </span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label>Last Login</label>
+                    <span class="eve-field">
+                    <i class="fas fa-clock" style="color: var(--accent); margin-right: 0.5rem;"></i>
+                    {{ user.last_login }}
+                </span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <label>Permissions</label>
+                    {% if user.get_all_permissions %}
+                        <ul class="feature-list">
+                            {% for perm in user.get_all_permissions %}
+                                <li>
+                                    <i class="fas fa-shield-alt"></i>
+                                    {{ perm }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <span class="eve-field" style="color: var(--muted);">
+                        <i class="fas fa-ban" style="margin-right: 0.5rem;"></i>
+                        No permissions assigned
+                    </span>
+                    {% endif %}
+                </div>
+
+                <div class="eve-divider"></div>
+
+                <div class="eve-btn-row">
+                    <a href="{% url 'accounts:edit_profile' user.pk %}" class="eve-btn">
+                        <i class="fas fa-pen"></i> Edit Profile
+                    </a>
+                    <a href="{% url 'accounts:password_change' %}" class="eve-btn-ghost">
+                        <i class="fas fa-lock"></i> Change Password
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

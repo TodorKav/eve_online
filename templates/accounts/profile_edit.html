@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 520px; margin: 4rem auto;">
+
+    <div class="eve-card">
+        <h5>// Edit Profile</h5>
+
+        <form method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="eve-alert error">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                    <div class="eve-alert error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <div class="eve-alert error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="eve-divider"></div>
+
+            <div class="eve-btn-row">
+                <button type="submit" class="eve-btn">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="{% url 'accounts:password_change' %}" class="eve-btn-ghost">
+                    <i class="fas fa-lock"></i> Change Password
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
