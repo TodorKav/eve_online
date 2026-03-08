@@ -680,3 +680,10 @@ footer {
   flex: 1;
   justify-content: center;
 }
+
+/* Form field group — label stacked above input */
+.eve-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}

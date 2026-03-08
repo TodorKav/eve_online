@@ -9,14 +9,26 @@
             <form method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;">
                 {% csrf_token %}
 
-                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="eve-alert error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="eve-form-group">
                     <label for="{{ form.username.id_for_label }}">Username</label>
                     {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <div class="eve-alert error">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <div class="eve-form-group">
                     <label for="{{ form.password.id_for_label }}">Password</label>
                     {{ form.password }}
+                    {% for error in form.password.errors %}
+                        <div class="eve-alert error">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
                 <button type="submit" class="eve-btn" style="width: 100%; justify-content: center;">

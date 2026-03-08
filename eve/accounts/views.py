@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, TemplateView
 
 from eve.accounts.forms import CustomUserCreationForm, CustomUserChangeForm
 
@@ -21,26 +21,19 @@ class UserCreateView(UserPassesTestMixin, CreateView):
         return True
 
 
-class UserEditView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UserEditView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'accounts/profile_edit.html'
     model = UserModel
     form_class = CustomUserChangeForm
     success_message = "Your profile was successfully updated."
 
+    def get_object(self, queryset=None):
+        return self.request.user
+
     def get_success_url(self):
-        return reverse_lazy('accounts:profile_detail', kwargs={'pk': self.object.pk})
-
-    def test_func(self):
-        if self.kwargs.get('pk') == self.request.user.pk:
-            return True
-        return False
+        return reverse_lazy('accounts:profile_detail')
 
 
-class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView,):
+class ProfileDetailView(LoginRequiredMixin, TemplateView,):
     template_name = 'accounts/profile_detail.html'
-    model = UserModel
 
-    def test_func(self):
-        if self.kwargs.get('pk') == self.request.user.pk:
-            return True
-        return False
