@@ -687,3 +687,11 @@ footer {
   flex-direction: column;
   gap: 0.4rem;
 }
+
+/* Pagination row with actions */
+.eve-pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}

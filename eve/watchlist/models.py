@@ -16,8 +16,9 @@ class Watchlist(models.Model):
 class WatchlistItem(CreatedAtMixin):
     watchlist = models.ForeignKey(to='Watchlist', on_delete=models.CASCADE, related_name="items")
     item = models.ForeignKey(to="industry.Types", on_delete=models.CASCADE, related_name="watchlist_entries")
+    corporation = models.ForeignKey(to='industry.CorporationsWithLPStores', on_delete=models.CASCADE, related_name="watchlist_entries")
 
     class Meta:
-        unique_together = ("watchlist", "item")
+        unique_together = ("watchlist", "item", "corporation")
 
 
