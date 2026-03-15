@@ -2,7 +2,7 @@
 #
 # register = template.Library()
 #
-# @register.filter
+# @register.filter # replaced with RequiredItemsMixin
 # def price_pro_lp(value):
 #     isk_income = (value.type_id.market_prices.adjusted_price
 #         if value.type_id and hasattr(value.type_id, 'market_prices')

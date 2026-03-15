@@ -5,9 +5,9 @@
 2. groups.py
 3. market_groups.py
 4. types.py
-5. market_prices.py
-6. corporations_with_lp_stores.py
-7. Corporations_lp_item_types
+5. corporations_with_lp_stores.py
+6. Corporations_lp_item_types
+7. market_prices.py
 
 ---
 ### Recommended updates for each model:

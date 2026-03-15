@@ -21,65 +21,66 @@ class PublishedMixin(models.Model):
         abstract = True
 
 
-class RequiredItemsMixin:
-    @staticmethod
-    def display(queryset):
-        Types = apps.get_model('industry', 'Types') # lazy loading to avoid circular imports
-
-        ##################################
-        # creating a type list, the goal is to get all objects from CorporationsLpItemTypes.required_items with one request
-        all_type_ids = set()
-        for obj in queryset:
-            if obj.required_items:
-                for content in obj.required_items:
-                    all_type_ids.add(content.get('type_id'))
-
-        # type_object_dict is a dictionary with key: types_id and the value is a class Types object
-        type_object_dict = {t.type_id: t for t in Types.objects.filter(type_id__in=all_type_ids).select_related('market_prices')}
-        ####################################
-
-        for obj in queryset:
-            if not obj.required_items:
-                setattr(obj, 'required', None)
-            else:
-                content_list = []
-                material_cost = 0
-                for content in obj.required_items:
-                    quantity = content.get('quantity')
-                    type_object = type_object_dict.get(content.get('type_id'))
-
-                    ############################################
-                    # due to inconsistencies in the database it is possible to have class Types objects without corresponding
-                    # MarketPrices object. The goal here is to avoid crashes, because of such inconsistencies.
-                    mc = getattr(type_object, 'market_prices', None)
-                    if mc:
-                        if material_cost is not None:
-                            material_cost += type_object.market_prices.adjusted_price * quantity
-                            # print(type_object.market_prices.adjusted_price)
-                    else:
-                        material_cost = None
-                        # print(type_object.type_id)
-                        # print(obj.type_id.name)
-                    ###############################################
-
-
-                    content_list.append(f'Item: {type_object.name} quantity: {quantity}.')
-                setattr(obj, 'required', ', '.join(content_list))
-                setattr(obj, 'material_cost', material_cost)
-
-
-            # price pro LP calculation
-            isk_income = (obj.type_id.market_prices.adjusted_price
-                          if obj.type_id and hasattr(obj.type_id, 'market_prices')
-                          else 0)
-            blueprint_cost = obj.isk_cost or 0
-            material_cost = getattr(obj, 'material_cost', 0) or 0
-            lp = obj.lp_cost or 1
-            if lp == 0:
-                lp = 1
-
-            obj.price_pro_lp = (isk_income * obj.quantity - blueprint_cost - material_cost) / lp
-            ############################
-
-
-        return queryset
+# Deprecated, the logic now is embedded in the ItemList view and in the  db_fetching_scripts.market_prices.py
+# class RequiredItemsMixin:
+#     @staticmethod
+#     def display(queryset):
+#         Types = apps.get_model('industry', 'Types') # lazy loading to avoid circular imports
+#
+#         ##################################
+#         # creating a type list, the goal is to get all objects from CorporationsLpItemTypes.required_items with one request
+#         all_type_ids = set()
+#         for obj in queryset:
+#             if obj.required_items:
+#                 for content in obj.required_items:
+#                     all_type_ids.add(content.get('type_id'))
+#
+#         # type_object_dict is a dictionary with key: types_id and the value is a class Types object
+#         type_object_dict = {t.type_id: t for t in Types.objects.filter(type_id__in=all_type_ids).select_related('market_prices')}
+#         ####################################
+#
+#         for obj in queryset:
+#             if not obj.required_items:
+#                 setattr(obj, 'required', None)
+#             else:
+#                 content_list = []
+#                 material_cost = 0
+#                 for content in obj.required_items:
+#                     quantity = content.get('quantity')
+#                     type_object = type_object_dict.get(content.get('type_id'))
+#
+#                     ############################################
+#                     # due to inconsistencies in the database it is possible to have class Types objects without corresponding
+#                     # MarketPrices object. The goal here is to avoid crashes, because of such inconsistencies.
+#                     mc = getattr(type_object, 'market_prices', None)
+#                     if mc:
+#                         if material_cost is not None:
+#                             material_cost += type_object.market_prices.adjusted_price * quantity
+#                             # print(type_object.market_prices.adjusted_price)
+#                     else:
+#                         material_cost = None
+#                         # print(type_object.type_id)
+#                         # print(obj.type_id.name)
+#                     ###############################################
+#
+#
+#                     content_list.append(f'Item: {type_object.name} quantity: {quantity}.')
+#                 setattr(obj, 'required', ', '.join(content_list))
+#                 setattr(obj, 'material_cost', material_cost)
+#
+#
+#             # price pro LP calculation
+#             isk_income = (obj.type_id.market_prices.adjusted_price
+#                           if obj.type_id and hasattr(obj.type_id, 'market_prices')
+#                           else 0)
+#             blueprint_cost = obj.isk_cost or 0
+#             material_cost = getattr(obj, 'material_cost', 0) or 0
+#             lp = obj.lp_cost or 1
+#             if lp == 0:
+#                 lp = 1
+#
+#             obj.price_pro_lp = (isk_income * obj.quantity - blueprint_cost - material_cost) / lp
+#             ############################
+#
+#
+#         return queryset

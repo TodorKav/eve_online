@@ -62,6 +62,8 @@ class CorporationsLpItemTypes(CreatedAtMixin):
     offer_id = models.IntegerField(blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
     required_items = models.JSONField(blank=True, null=True)
+    material_cost = models.FloatField(blank=True, null=True)
+    required = models.TextField(max_length=200, blank=True, null=True)
 
     class Meta:
         unique_together = ('type_id', 'corporation_id')
