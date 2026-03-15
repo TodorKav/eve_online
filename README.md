@@ -52,21 +52,13 @@ cd eve_online
 pip install -r requirements.txt
 python manage.py runserver
 Database Setup
-
 The project uses a Supabase database.
-
 Connection credentials will be provided separately.
-
 Alternative: Local Database
-
 Using a local database is also possible. In this case, you must first run the data fetching scripts located in:
-
 eve/industry/db_fetching_scripts
-
 Before running the scripts, carefully read:
-
 scripts running sequence.md
-
 located in the same folder.
 
 ⚠️ Important:
