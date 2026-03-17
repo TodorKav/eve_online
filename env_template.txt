@@ -1,9 +1,20 @@
 
 SECRET_KEY=
 ALLOWED_HOSTS=
-DB_NAME=
-DB_USER=
-DB_PASSWORD=
-DB_HOST=
-DB_PORT=
+DB_NAME=postgres
+DB_USER=postgres.armbtvpxalxvxeaxxlbd
+DB_PASSWORD=xfl0Za90tev4PC4S
+DB_HOST=aws-1-eu-west-1.pooler.supabase.com
+DB_PORT=5432
 DEBUG=
+
+The DB credentials are here because:
+
+Здравейте,
+Всичко необходимо, свързано с проекта, следва да бъде описано в README файла,
+както е посочено и в документа, съдържащ изискванията за изпитен проект. ....
+
+Здравейте,
+Както вече споменахме, това следва да бъде описано в README файла, за да може
+проверяващия, когато стигне до тестване на Вашия проект да реши дали това е
+важно и съгласно изискванията за Basics курса...
