@@ -7,6 +7,13 @@ The application helps players analyze which items are the most profitable to pur
 
 ---
 
+The project has been successfully deployed and is now live. You can access it at the following URL:
+
+http://eve-bbewageuc4cvh4gm.italynorth-01.azurewebsites.net
+
+Please visit the link to explore the full functionality and features of the application.
+
+---
 ## Main Functionalities
 
 ### LP Store Overview
@@ -23,6 +30,7 @@ After authentication, users can:
 ### Watchlist Management
 - Create multiple tables for organizing items
 - Move and group items based on the user's strategy
+- For the convenience of players, a description can be added to each watchlist.
 
 ### Resource Cost Calculation
 - Display all **required resources** needed to obtain selected items
@@ -33,7 +41,7 @@ After authentication, users can:
 ## Planned Features (To Be Implemented)
 
 ### Inventory Check
-After authorization, the application will be able to:
+After Character authorization via EVE SSO, the application will be able to:
 
 - Check which resources the player already owns
 - Display which resources **still need to be purchased**
@@ -50,14 +58,19 @@ cd eve_online
 pip install -r requirements.txt
 python manage.py runserver
 Database Setup
-The project uses a Supabase database.
-Connection credentials are in the env_template.txt file.
-Alternative: Local Database
-Using a local database is also possible. In this case, you must first run the data fetching scripts located in:
+- python manage.py makemigrations
+- python manage.py migrate
+- Run the data fetching scripts located in:
 eve/industry/db_fetching_scripts
 Before running the scripts, carefully read:
 scripts running sequence.md
 located in the same folder.
+Optionally, for some scripts that take longer to fetch data, alternative 
+versions are provided that utilize Celery and Redis for improved performance.
+Using Celery and Redis allow concurrent data fetching, 
+which drastically reduces the time needed to fetch all data. 
+However, it requires additional setup of Celery and Redis
 
 ⚠️ Important:
 The data fetching process takes approximately 1.5 hours to complete.
+Enabling concurrent fetching with Celery and Redis can reduce this time to around 20 minutes.
